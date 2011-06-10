@@ -1,0 +1,6 @@
+= getme
+
+Describe your project here
+
+:include:getme.rdoc
+
