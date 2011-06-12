@@ -147,7 +147,7 @@ end
 
 # ********** BRAINCRAVE ***********
 desc "the place where your brain and my crave become one"
-arg_name 'Braincrave'
+arg_name 'braincrave'
 command :braincrave do |c|
   #c.desc 'Describe a switch to weather'
   #c.switch :x
@@ -158,6 +158,43 @@ command :braincrave do |c|
   
   c.action do |global_options,options,args|
     system "open 'http://www.braincrave.org'"
+  end
+end
+
+pre do |global,command,options,args|
+  # Pre logic here
+  # Return true to proceed; false to abourt and not call the
+  # chosen command
+  # Use skips_pre before a command to skip this block
+  # on that command only
+  true
+end
+
+post do |global,command,options,args|
+  # Post logic here
+  # Use skips_post before a command to skip this
+  # block on that command only
+end
+
+on_error do |exception|
+  # Error logic here
+  # return false to skip default error handling
+  true
+end
+
+# ********** google ***********
+desc "search google from the command line"
+arg_name 'google'
+command :google do |c|
+  #c.desc 'Describe a switch to weather'
+  #c.switch :x
+
+  c.desc 'You type, we search'
+  c.default_value 'searchy search'
+  c.flag :s
+  
+  c.action do |global_options,options,args|
+    system "open 'http://www.google.com/search?ie=UTF-8&q=#{:s}'"
   end
 end
 
