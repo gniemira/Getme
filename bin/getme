@@ -1,4 +1,4 @@
-#!/usr/bin/ruby
+#!/usr/bin/env ruby
 # 1.9 adds realpath to resolve symlinks; 1.8 doesn't
 # have this method, so we add it so we get resolved symlinks
 # and compatibility
@@ -14,36 +14,109 @@ $: << File.expand_path(File.dirname(File.realpath(__FILE__)) + '/../lib')
 require 'rubygems'
 require 'gli'
 require 'getme_version'
+require 'open-uri'
+require 'nokogiri'
 
 include GLI
 
-program_desc 'Describe your application here'
+program_desc 'Getme helps you get the info you need to be a successful and happy human.'
 
 version Getme::VERSION
 
-desc 'Describe some switch here'
-switch [:s,:switch]
+#desc 'Describe some switch here'
+#switch [:s,:switch]
 
-desc 'Describe some flag here'
-default_value 'the default'
-arg_name 'The name of the argument'
-flag [:f,:flagname]
+#desc 'Describe some flag here'
+#default_value 'the default'
+#arg_name 'The name of the argument'
+#flag [:f,:flagname]
 
-desc 'Describe bart here'
-arg_name 'Describe arguments to bart here'
+desc 'Real-time ETD info from BART'
+arg_name 'Use the following options to get information about when BART trains are arriving'
 command :bart do |c|
-  c.desc 'Describe a switch to bart'
-  c.switch :s
+  #c.desc 'Describe a switch to bart'
+  #c.switch :x
 
-  c.desc 'Describe a flag to bart'
-  c.default_value 'default'
-  c.flag :f
+  c.desc 'What station are you leaving from?'
+  c.default_value 'mcar'
+  c.flag [:s, :station ]
+  
+  c.desc 'What direction are you going? Takes n for north or s for south'
+  c.default_value 'n'
+  c.flag [:d, :direction ]
+  
   c.action do |global_options,options,args|
+    # get the station from args on the s flag
+    station = options[:s].upcase
+    # get the direction from args on the d flag
+    dir = options[:d].upcase
+    key = "MMDH-TYY7-YW4Y-VSQU"
+ 
+    # use all that bullshit to construct the url
+    url = "http://api.bart.gov/api/etd.aspx?cmd=etd&orig=#{station}&key=#{key}&dir=#{dir}"
+    # pass the url through nokogiri
+    doc = Nokogiri::XML(open(url))
+    # use xpath to load up all the etd nodes
+    doc.xpath("//etd").each do |node|
+      # get the name of the destination
+      dest = node.xpath("destination").text
+      # get all the minutes for that destination and stuff it in an array
+      minutes = node.xpath("estimate/minutes").collect { |x| x.text + " minutes"}
+      # turn it into text and strip out the garbage
+      min = minutes.to_s.gsub('"', '').gsub('[', '').gsub(']', '')
+      # print the results
+      puts "#{dest} train leaving in #{min}"
+      # speak the results
+      system "say #{dest} trean leaving in #{min}"
+    end
+  end
+end
 
-    # Your command logic here
-     
-    # If you have any errors, just raise them
-    # raise "that command made no sense"
+pre do |global,command,options,args|
+  puts "trains departing #{options[:s]} in the direction #{options[:d]}"
+  # Pre logic here
+  # Return true to proceed; false to abourt and not call the
+  # chosen command
+  # Use skips_pre before a command to skip this block
+  # on that command only
+  true
+end
+
+post do |global,command,options,args|
+  # Post logic here
+  # Use skips_post before a command to skip this
+  # block on that command only
+end
+
+on_error do |exception|
+  # Error logic here
+  # return false to skip default error handling
+  true
+end
+
+desc "What's the weather yo?"
+arg_name 'Here are some arguments to weather'
+command :weather do |c|
+  #c.desc 'Describe a switch to weather'
+  #c.switch :x
+
+  c.desc 'Provide your zip, get your temperature'
+  c.default_value '94110'
+  c.flag [:t, :temp ]
+  
+  c.action do |global_options,options,args|
+    zip = options[:t]
+    doc = Nokogiri::XML(open("http://api.wunderground.com/auto/wui/geo/GeoLookupXML/index.xml?query=#{zip}"))
+    station = doc.xpath("//station[1]/id").text
+    hood = doc.xpath("//station[1]/neighborhood").text
+    url = "http://api.wunderground.com/weatherstation/WXCurrentObXML.asp?ID=#{station}"
+    # load up all the Weather info from the API
+    current_weather_doc = Nokogiri::XML(open(url))
+    current_weather_doc.xpath("/current_observation").each do |node|
+     temp = node.xpath("temp_f").text 
+     puts "It is #{temp} f at #{hood}"
+     system "say It is #{temp} degrees at #{hood}"
+    end
   end
 end
 

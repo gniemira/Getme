@@ -1,6 +1,6 @@
 = getme
 
-Describe your project here
+Getme gets you stuff. Try it out
 
 :include:getme.rdoc
 
