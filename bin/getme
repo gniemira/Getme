@@ -31,6 +31,8 @@ version Getme::VERSION
 #arg_name 'The name of the argument'
 #flag [:f,:flagname]
 
+# ******** BART **********
+
 desc 'Real-time ETD info from BART'
 arg_name 'Use the following options to get information about when BART trains are arriving'
 command :bart do |c|
@@ -94,6 +96,8 @@ on_error do |exception|
   true
 end
 
+# ******** Weather ************
+
 desc "What's the weather yo?"
 arg_name 'Here are some arguments to weather'
 command :weather do |c|
@@ -117,6 +121,43 @@ command :weather do |c|
      puts "It is #{temp} f at #{hood}"
      system "say It is #{temp} degrees at #{hood}"
     end
+  end
+end
+
+pre do |global,command,options,args|
+  # Pre logic here
+  # Return true to proceed; false to abourt and not call the
+  # chosen command
+  # Use skips_pre before a command to skip this block
+  # on that command only
+  true
+end
+
+post do |global,command,options,args|
+  # Post logic here
+  # Use skips_post before a command to skip this
+  # block on that command only
+end
+
+on_error do |exception|
+  # Error logic here
+  # return false to skip default error handling
+  true
+end
+
+# ********** BRAINCRAVE ***********
+desc "the place where your brain and my crave become one"
+arg_name 'Braincrave'
+command :braincrave do |c|
+  #c.desc 'Describe a switch to weather'
+  #c.switch :x
+
+  #c.desc 'Provide your zip, get your temperature'
+  #c.default_value '94110'
+  #c.flag [:t, :temp ]
+  
+  c.action do |global_options,options,args|
+    system "open 'http://www.braincrave.org'"
   end
 end
 
