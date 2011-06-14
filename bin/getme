@@ -59,6 +59,7 @@ command :bart do |c|
     # pass the url through nokogiri
     doc = Nokogiri::XML(open(url))
     # use xpath to load up all the etd nodes
+    puts "trains departing #{station} in the direction #{dir}"
     doc.xpath("//etd").each do |node|
       # get the name of the destination
       dest = node.xpath("destination").text
@@ -75,7 +76,6 @@ command :bart do |c|
 end
 
 pre do |global,command,options,args|
-  puts "trains departing #{options[:s]} in the direction #{options[:d]}"
   # Pre logic here
   # Return true to proceed; false to abourt and not call the
   # chosen command
@@ -206,7 +206,7 @@ command :google do |c|
   c.flag :s
   
   c.action do |global_options,options,args|
-    system "open 'http://www.google.com/search?ie=UTF-8&q=#{:s}'"
+    system "open 'http://www.google.com/search?ie=UTF-8&q=#{options[:s]}'"
   end
 end
 
