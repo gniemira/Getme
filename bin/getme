@@ -67,7 +67,7 @@ command :bart do |c|
       # turn it into text and strip out the garbage
       min = minutes.to_s.gsub('"', '').gsub('[', '').gsub(']', '')
       # print the results
-      puts "#{dest} train leaving in #{min}"
+      puts "> #{dest} train leaving in #{min}"
       # speak the results
       system "say #{dest} trean leaving in #{min}"
     end
@@ -104,23 +104,35 @@ command :weather do |c|
   #c.desc 'Describe a switch to weather'
   #c.switch :x
 
-  c.desc 'Provide your zip, get your temperature'
-  c.default_value '94110'
-  c.flag [:t, :temp ]
+  c.desc 'Provide your zip, get your current weather'
+  c.default_value '94609'
+  c.flag [:z, :zip]
   
-  c.action do |global_options,options,args|
-    zip = options[:t]
+  c.desc 'How many days of forecasts do you want? Max number of days is 6'
+  c.default_value '3'
+  c.flag [:f, :forecast]
+  
+  c.action do |global_options,options,args|    
+    zip = options[:z]
     doc = Nokogiri::XML(open("http://api.wunderground.com/auto/wui/geo/GeoLookupXML/index.xml?query=#{zip}"))
     station = doc.xpath("//station[1]/id").text
     hood = doc.xpath("//station[1]/neighborhood").text
-    url = "http://api.wunderground.com/weatherstation/WXCurrentObXML.asp?ID=#{station}"
-    # load up all the Weather info from the API
-    current_weather_doc = Nokogiri::XML(open(url))
+    current_weather_doc = Nokogiri::XML(open("http://api.wunderground.com/weatherstation/WXCurrentObXML.asp?ID=#{station}"))
     current_weather_doc.xpath("/current_observation").each do |node|
      temp = node.xpath("temp_f").text 
-     puts "It is #{temp} f at #{hood}"
-     system "say It is #{temp} degrees at #{hood}"
+     puts "> It is currently #{temp} f at #{hood}"
+     system "say It is currently #{temp} degrees at #{hood}"
     end
+    
+    forecast_doc = Nokogiri::XML(open("http://api.wunderground.com/auto/wui/geo/ForecastXML/index.xml?query=#{zip}"))
+    forecast_doc.xpath("//simpleforecast/forecastday[position()<=#{options[:f]}]").each do |node|
+      day = node.xpath("date/weekday").text
+      high = node.xpath("high/fahrenheit").text
+      low = node.xpath("low/fahrenheit").text
+      conditions = node.xpath("conditions").text
+      puts "> #{day} | high of #{high} | low of #{low} | #{conditions}"
+      system "say #{day} high of #{high}, low of #{low} and #{conditions}"
+    end 
   end
 end
 
