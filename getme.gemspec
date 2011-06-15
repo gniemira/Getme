@@ -7,10 +7,17 @@ spec = Gem::Specification.new do |s|
   s.email = 'gniemira@gmail.com'
   s.homepage = 'http://gerardniemira.com'
   s.platform = Gem::Platform::RUBY
-  s.summary = 'A description of your project'
+  s.summary = 'get awesome stuff from the command line'
 # Add your other files here if you make them
   s.files = %w(
 bin/getme
+Gemfile
+Gemfile.lock
+getme.gemspec
+getme.rdoc
+lib/getme_version.rb
+Rakefile
+README.rdoc
   )
   s.require_paths << 'lib'
   s.has_rdoc = true

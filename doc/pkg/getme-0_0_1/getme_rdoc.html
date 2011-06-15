@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+
+  <title>File: getme.rdoc [RDoc Documentation]</title>
+
+  <link type="text/css" media="screen" href="../../rdoc.css" rel="stylesheet" />
+
+  <script src="../../js/jquery.js" type="text/javascript"
+    charset="utf-8"></script>
+  <script src="../../js/thickbox-compressed.js" type="text/javascript"
+    charset="utf-8"></script>
+  <script src="../../js/quicksearch.js" type="text/javascript"
+    charset="utf-8"></script>
+  <script src="../../js/darkfish.js" type="text/javascript"
+    charset="utf-8"></script>
+</head>
+
+<body class="file">
+  <div id="metadata">
+    <div id="home-metadata">
+      <div id="home-section" class="section">
+        <h3 class="section-header">
+          <a href="../../index.html">Home</a>
+          <a href="../../index.html#classes">Classes</a>
+          <a href="../../index.html#methods">Methods</a>
+        </h3>
+      </div>
+    </div>
+
+    <div id="project-metadata">
+      
+      
+      <div id="fileindex-section" class="section project-section">
+        <h3 class="section-header">Files</h3>
+        <ul>
+        
+          <li class="file"><a href="../../Gemfile.html">Gemfile</a></li>
+        
+          <li class="file"><a href="../../README_rdoc.html">README.rdoc</a></li>
+        
+          <li class="file"><a href="../../Rakefile.html">Rakefile</a></li>
+        
+          <li class="file"><a href="../../getme_rdoc.html">getme.rdoc</a></li>
+        
+          <li class="file"><a href="../../pkg/getme-0_0_1/README_rdoc.html">README.rdoc</a></li>
+        
+          <li class="file"><a href="../../pkg/getme-0_0_1/getme_rdoc.html">getme.rdoc</a></li>
+        
+        </ul>
+      </div>
+      
+
+      <div id="classindex-section" class="section project-section">
+        <h3 class="section-header">Class Index
+          <span class="search-toggle"><img src="../../images/find.png"
+            height="16" width="16" alt="[+]"
+            title="show/hide quicksearch" /></span></h3>
+        <form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+        <fieldset>
+          <legend>Quicksearch</legend>
+          <input type="text" name="quicksearch" value=""
+            class="quicksearch-field" />
+        </fieldset>
+        </form>
+
+        <ul class="link-list">
+        
+          <li><a href="../../Getme.html">Getme</a></li>
+        
+          <li><a href="../../Object.html">Object</a></li>
+        
+          <li><a href="../../TC_testNothing.html">TC_testNothing</a></li>
+        
+        </ul>
+        <div id="no-class-search-results" style="display: none;">No matching classes.</div>
+      </div>
+
+      
+    </div>
+  </div>
+
+  <div id="documentation">
+    
+<h1><tt>getme</tt></h1>
+
+<p><a href="../../Getme.html">Getme</a> helps you get the info you need to be
+a successful and happy human.</p>
+
+<pre>getme command_name [command-specific options] [--] arguments...</pre>
+<ul><li>
+<p>Use the command <tt>help</tt> to get a summary of commands</p>
+</li><li>
+<p>Use the command <tt>help command_name</tt> to get a help for
+<tt>command_name</tt></p>
+</li><li>
+<p>Use <tt>--</tt> to stop command line argument processing; useful if your
+arguments have dashes in them</p>
+</li></ul>
+
+<h2>Commands</h2>
+<dl><dt><tt>bart</tt></dt>
+<dd>
+<p>Real-time ETD info from BART</p>
+</dd><dt><tt>braincrave</tt></dt>
+<dd>
+<p>the place where your brain and my crave become one</p>
+</dd><dt><tt>google</tt></dt>
+<dd>
+<p>search google from the command line</p>
+</dd><dt><tt>help</tt></dt>
+<dd>
+<p>Shows list of commands or help for one command</p>
+</dd><dt><tt>weather</tt></dt>
+<dd>
+<p>What’s the weather yo?</p>
+</dd></dl>
+
+<h3><tt>bart Use the following options to get information about when BART trains are arriving</tt></h3>
+
+<p>Real-time ETD info from BART</p>
+
+<h4>Options</h4>
+
+<p>These options are specified <b>after</b> the command.</p>
+<dl><dt><tt>-d, --direction=arg</tt></dt>
+<dd>
+<p>What direction are you going? Takes n for north or s for south <em>(
+default: <tt>n</tt>)</em></p>
+</dd><dt><tt>-s, --station=arg</tt></dt>
+<dd>
+<p>What station are you leaving from? <em>( default: <tt>mcar</tt>)</em></p>
+</dd></dl>
+
+<h3><tt>braincrave braincrave</tt></h3>
+
+<p>the place where your brain and my crave become one</p>
+
+<h3><tt>google google</tt></h3>
+
+<p>search google from the command line</p>
+
+<h4>Options</h4>
+
+<p>These options are specified <b>after</b> the command.</p>
+<dl><dt><tt>-s arg</tt></dt>
+<dd>
+<p>You type, we search <em>( default: <tt>searchy search</tt>)</em></p>
+</dd></dl>
+
+<h3><tt>help [command]</tt></h3>
+
+<p>Shows list of commands or help for one command</p>
+
+<p>Gets help for the application or its commands.  Can also list the commands
+in a way helpful to creating a bash-style completion function</p>
+
+<h4>Options</h4>
+
+<p>These options are specified <b>after</b> the command.</p>
+<dl><dt><tt>-c, --completion</tt></dt>
+<dd>
+<p>List all commands one line at a time, for use with shell completion
+([command] argument is partial command to match)</p>
+</dd></dl>
+
+<h3><tt>weather Here are some arguments to weather</tt></h3>
+
+<p>What’s the weather yo?</p>
+
+<h4>Options</h4>
+
+<p>These options are specified <b>after</b> the command.</p>
+<dl><dt><tt>-f, --forecast=arg</tt></dt>
+<dd>
+<p>How many days of forecasts do you want? Max number of days is 6 <em>(
+default: <tt>3</tt>)</em></p>
+</dd><dt><tt>-z, --zip=arg</tt></dt>
+<dd>
+<p>Provide your zip, get your current weather <em>( default:
+<tt>94609</tt>)</em></p>
+</dd></dl>
+
+  </div>
+
+  <div id="validator-badges">
+    <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+    <p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+      Rdoc Generator</a> 2</small>.</p>
+  </div>
+</body>
+</html>
+

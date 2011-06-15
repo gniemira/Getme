@@ -1,0 +1,10 @@
+= getme
+
+Getme gets you stuff. Try it out
+
+Please note that I don't know what I"m doing
+
+Thanks for playing
+
+:include:getme.rdoc
+
