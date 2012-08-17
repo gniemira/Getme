@@ -1,7 +1,11 @@
 #!/usr/bin/env ruby
+
+
 # 1.9 adds realpath to resolve symlinks; 1.8 doesn't
 # have this method, so we add it so we get resolved symlinks
 # and compatibility
+
+
 unless File.respond_to? :realpath
   class File #:nodoc:
     def self.realpath path
@@ -17,7 +21,7 @@ require 'getme_version'
 require 'open-uri'
 require 'nokogiri'
 
-include GLI
+include GLI::App
 
 program_desc 'Getme helps you get the info you need to be a successful and happy human.'
 
@@ -157,6 +161,50 @@ on_error do |exception|
   true
 end
 
+# ******** Kiva songification ************
+
+desc "Sing a Kiva loan description"
+arg_name 'Kiva'
+command :kiva do |c|
+  #c.desc 'Describe a switch to weather'
+  #c.switch :x
+
+  c.desc 'Provide a loan id, get it sung to you'
+  c.default_value '2930'
+  c.flag [:l, :loan]
+  
+  c.action do |global_options,options,args|    
+    loan = options[:l]
+    doc = Nokogiri::XML(open("http://api.kivaws.org/v1/loans/#{:l}.xml"))
+      en = doc.xpath("en").text
+      name = doc.expath("name").text
+      country = doc.xpath("country")   
+     puts "Loan for #{name} in #{country} - #{en}"
+     system 'say -v Cello "I will sing a song to you of #{name} in #{country}. #{en}"'
+  end
+end
+
+pre do |global,command,options,args|
+  # Pre logic here
+  # Return true to proceed; false to abourt and not call the
+  # chosen command
+  # Use skips_pre before a command to skip this block
+  # on that command only
+  true
+end
+
+post do |global,command,options,args|
+  # Post logic here
+  # Use skips_post before a command to skip this
+  # block on that command only
+end
+
+on_error do |exception|
+  # Error logic here
+  # return false to skip default error handling
+  true
+end
+
 # ********** BRAINCRAVE ***********
 desc "the place where your brain and my crave become one"
 arg_name 'braincrave'
@@ -231,4 +279,4 @@ on_error do |exception|
   true
 end
 
-exit GLI.run(ARGV)
+exit run(ARGV)
